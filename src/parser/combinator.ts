@@ -1,4 +1,4 @@
-import { Parser } from './parser';
+import { Parser } from "./parser";
 
 /**
  * 与えられたパーサーと順番にマッチするパーサーを生成する
@@ -11,7 +11,7 @@ export function seq(...parsers: Parser[]): Parser {
         return {
           success: false,
           position,
-        }
+        };
       }
       position = ret.position;
     }
@@ -19,7 +19,7 @@ export function seq(...parsers: Parser[]): Parser {
       success: true,
       position,
     };
-  }
+  };
 }
 
 /**
@@ -36,8 +36,8 @@ export function or(...parsers: Parser[]): Parser {
     return {
       success: false,
       position,
-    }
-  }
+    };
+  };
 }
 
 /**
@@ -52,7 +52,7 @@ export function option(parser: Parser): Parser {
       return {
         success: true,
         position,
-      }
+      };
     }
-  }
+  };
 }

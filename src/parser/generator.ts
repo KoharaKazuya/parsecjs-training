@@ -1,4 +1,4 @@
-import { Parser } from './parser';
+import { Parser } from "./parser";
 
 /**
  * 任意の固定長文字列 (トークン) と一致するパーサーを生成する
@@ -8,15 +8,15 @@ export function token(str: string): Parser {
     const sub = text.substr(position, str.length);
     if (sub === str) {
       return {
-        success: true,
         position: position + str.length,
+        success: true,
       };
     }
     return {
       success: false,
       position,
     };
-  }
+  };
 }
 
 /**
@@ -29,13 +29,13 @@ export function regexp(exp: RegExp): Parser {
     if (arr && arr.index === 0) {
       const matchedStr = arr[0];
       return {
-        success: true,
         position: position + matchedStr.length,
+        success: true,
       };
     }
     return {
       success: false,
       position,
     };
-  }
+  };
 }
