@@ -36,23 +36,7 @@ const commitMessageParser = seq(
 
 function test(parser: Parser, text: string): boolean {
   const parsed = parser(text, 0);
-  if (parsed.success && parsed.position === text.length) {
-    console.log(
-      `%c成功しました\n%c------\n%c${ text }`,
-      "font: bold; color: green",
-      "color: gray",
-      ""
-      );
-    return true;
-  } else {
-    console.log(
-      `%c${ parsed.position + 1 } 文字目で失敗しました\n%c------\n%c${ text }`,
-      "font: bold; color: red",
-      "color: gray",
-      ""
-      );
-    return false;
-  }
+  return parsed.success && parsed.position === text.length;
 }
 export function testCommitMessage(text: string): boolean {
   return test(commitMessageParser, text);
