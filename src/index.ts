@@ -1,4 +1,4 @@
-import { Parser, token, regexp, seq, or, option, lazy } from "./parser/index.ts";
+import { Parser, token, seq, or, option, lazy, many, anyChar } from "./parser/index.ts";
 
 const emptyLineParser = token("\n");
 
@@ -13,11 +13,11 @@ const headerLineParser = seq(
   headerTagParser,
   token("]"),
   token(": "),
-  regexp(/.+/),
+  many(anyChar()),
   token("\n")
   );
 
-const notEmptyLineParser = seq(regexp(/.+/), token("\n"));
+const notEmptyLineParser = seq(many(anyChar()), token("\n"));
 const bodyLinesParser = seq(notEmptyLineParser, option(lazy(() => bodyLinesParser)));
 
 const footerLineParser = notEmptyLineParser;

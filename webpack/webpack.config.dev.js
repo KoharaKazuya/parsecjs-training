@@ -8,6 +8,10 @@ module.exports = {
     filename: '[name].js'
   },
 
+  resolve: {
+    extensions: ["", ".webpack.js", ".web.js", ".js", ".ts", ".d.ts", ".spec.ts"]
+  },
+
   module: {
     preLoaders: [
       {

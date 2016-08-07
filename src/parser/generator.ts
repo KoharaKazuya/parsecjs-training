@@ -1,41 +1,43 @@
 import { Parser } from "./parser";
 
 /**
- * 任意の固定長文字列 (トークン) と一致するパーサーを生成する
+ * 与えられた任意の一文字と一致するパーサーを生成する
  */
-export function token(str: string): Parser {
+export function char(c: string): Parser {
+  // c は 1 文字でなければならない
+  if (c.length !== 1) {
+    throw new Error("char()'s argument is a character (= string of one length)");
+  }
+
   return (text: string, position: number) => {
-    const sub = text.substr(position, str.length);
-    if (sub === str) {
+    if (text.length > position && text.charAt(position) === c) {
       return {
-        position: position + str.length,
+        position: position + 1,
         success: true,
       };
     }
     return {
-      success: false,
       position,
+      success: false,
     };
   };
 }
 
 /**
- * 任意の正規表現とマッチするパーサーを生成する
+ * 任意の一文字と一致するパーサーを生成する
  */
-export function regexp(exp: RegExp): Parser {
+export function anyChar(): Parser {
   return (text: string, position: number) => {
-    const sub = text.substr(position);
-    const arr = exp.exec(sub);
-    if (arr && arr.index === 0) {
-      const matchedStr = arr[0];
+    if (text.length > position && text.charAt(position) !== "\n") {
       return {
-        position: position + matchedStr.length,
+        position: position + 1,
         success: true,
       };
+    } else {
+      return {
+        position,
+        success: false,
+      };
     }
-    return {
-      success: false,
-      position,
-    };
   };
 }
